@@ -1,15 +1,24 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import FormValidator from './FormValidator';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import Modal from './Modal';
+import useModal from './UseModal';
 
 
 const Register = () =>{
     let navigate = useNavigate()
+    const {isShowing, toggle} = useModal();
+     useEffect(toggle,[])
  return(
+    <Modal
+    isShowing={isShowing}
+    hide={toggle}
+  >
   <div>
     <App4 navigate={navigate}/>
   </div>
+  </Modal>
  )
 }
 
@@ -111,6 +120,18 @@ if(validation.isValid) {
 render() {
 let validation = this.submitted ?this.validator.validate(this.state) : this.state.validation
 return (
+    <div>
+    <div className="container">
+    <img className="title" src="https://housen.ca/_next/static/media/Housen.ca.ce7c102b.png" alt=""/>
+    <h2 className='sign'>Create Account</h2>
+    <b>Your free account includes:</b>
+    <div className="body">
+    <li>Instant Access to All Photos, Virtual Tours, & More!</li>
+    <li>Full Access to <span className='inline'>Listing Sold History</span> (GTA) & Details</li>
+    <li>Save Homes & Searches, Add Listing/Community Watch Alerts</li>
+    </div>
+    </div>
+
      <div className="container">
        <div className="row">
          <div className="col-md-4 col-md-offset-4">
@@ -133,10 +154,12 @@ return (
     <div className={validation.password_confirmation.isInvalid && 'has-error'}>
        <label htmlFor="password_confirmation">Confirm Password</label>
        <input type="password" className="form-control" placeholder="Confirm Password" name="password_confirmation" onChange={this.handleInputChange} /> <span className="help-block">{validation.password_confirmation.message}</span> </div>
-    <button onClick={this.handleFormSubmit} className="btn btn-primary"> Register </button>
+    <button onClick={this.handleFormSubmit} className="button"> Register </button>
 </form>
+
         </div>
      </div>
+  </div>
   </div>
 )
 }
